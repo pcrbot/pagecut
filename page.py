@@ -8,23 +8,17 @@ sv = Service('网页截图')
 
 def getpic(url,saveImgName):
     options = webdriver.ChromeOptions()
-   
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-software-rasterizer')
-    
     chromedriver = r"C:\Users\Administrator\AppData\Local\Google\Chrome\Application\chromedriver.exe"
     driver = webdriver.Chrome(options=options,executable_path =chromedriver)
     driver.maximize_window()
-    
     js_height = "return document.body.clientHeight"
     picname = saveImgName
     link = url 
-    
     try:
         driver.get(link)
-       
         height = driver.execute_script(js_height)
-       
         scroll_width = driver.execute_script('return document.body.parentNode.scrollWidth')
         scroll_height = driver.execute_script('return document.body.parentNode.scrollHeight')
         driver.set_window_size(scroll_width, scroll_height)
