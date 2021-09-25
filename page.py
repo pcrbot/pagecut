@@ -6,7 +6,7 @@ from hoshino import R, Service, priv, util
 
 sv = Service('网页截图')
 
-def webshot(url,saveImgName):
+def getpic(url,saveImgName):
     options = webdriver.ChromeOptions()
    
     options.add_argument('--no-sandbox')
@@ -22,7 +22,7 @@ def webshot(url,saveImgName):
     
     try:
         driver.get(link)
-        k = 1
+       
         height = driver.execute_script(js_height)
        
         scroll_width = driver.execute_script('return document.body.parentNode.scrollWidth')
@@ -40,7 +40,7 @@ async def pic(bot, event):
     path = ev.message.extract_plain_text().split()
     if 'http://' not in path and 'https://' not in path:
         path='http://'+path
-    ss=webshot(path,'C:\\nb2\\mimibot\\src\\plugins\\pcr-rank\\img\\imgs')
+    ss=getpic(path,'C:\\nb2\\mimibot\\src\\plugins\\pcr-rank\\img\\imgs')
     if ss==True:
         await bot.send(event,R.img('imgs.png').cqcode)
     else:
