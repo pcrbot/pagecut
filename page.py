@@ -35,13 +35,10 @@ def getpic(url,saveImgName):
         scroll_height = driver.execute_script('return document.body.parentNode.scrollHeight')
         driver.set_window_size(scroll_width, scroll_height)
         driver.get_screenshot_as_file(picname + ".png")
-        
-        print("Process {} get one pic !!!".format(os.getpid()))
-        time.sleep(0.1)
         return True
     except Exception as e:
         return False
-        print(picname, e)
+       
  
 @sv.on_prefix('截图')
 async def pic(bot, event):
