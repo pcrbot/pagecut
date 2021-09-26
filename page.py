@@ -8,26 +8,42 @@ sv = Service('网页截图')
 
 def getpic(url,saveImgName):
     options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
-    options.add_argument('--disable-software-rasterizer')
     chromedriver = r"C:\Users\Administrator\AppData\Local\Google\Chrome\Application\chromedriver.exe"
     driver = webdriver.Chrome(options=options,executable_path =chromedriver)
     driver.maximize_window()
+    # 返回网页的高度的js代码
     js_height = "return document.body.clientHeight"
     picname = saveImgName
     link = url 
+    # driver.get(link)
     try:
         driver.get(link)
+        k = 1
         height = driver.execute_script(js_height)
+        while True:
+            if k * 500 < height:
+                js_move = "window.scrollTo(0,{})".format(k * 500)
+                print(js_move)
+                driver.execute_script(js_move)
+                time.sleep(0.2)
+                height = driver.execute_script(js_height)
+                k += 1
+            else:
+                break
         scroll_width = driver.execute_script('return document.body.parentNode.scrollWidth')
         scroll_height = driver.execute_script('return document.body.parentNode.scrollHeight')
         driver.set_window_size(scroll_width, scroll_height)
         driver.get_screenshot_as_file(picname + ".png")
+        
+        print("Process {} get one pic !!!".format(os.getpid()))
         time.sleep(0.1)
         return True
-    except:
-
+    except Exception as e:
         return False
+        print(picname, e)
  
 @sv.on_prefix('截图')
 async def pic(bot, event):
