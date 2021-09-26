@@ -14,11 +14,9 @@ def getpic(url,saveImgName):
     chromedriver = r"C:\Users\Administrator\AppData\Local\Google\Chrome\Application\chromedriver.exe"
     driver = webdriver.Chrome(options=options,executable_path =chromedriver)
     driver.maximize_window()
-    # 返回网页的高度的js代码
     js_height = "return document.body.clientHeight"
     picname = saveImgName
     link = url 
-    # driver.get(link)
     try:
         driver.get(link)
         k = 1
