@@ -43,7 +43,7 @@ def getpic(url,saveImgName):
 @sv.on_prefix('截图')
 async def pic(bot, event):
     path = ev.message.extract_plain_text().split()
-    if 'http://' not in path and 'https://' not in path:
+    if not path.startswith(('http://','https://')):
         path='http://'+path
     ss=getpic(path,'C:\\nb2\\mimibot\\src\\plugins\\pcr-rank\\img\\imgs')
     if ss==True:
